@@ -18,7 +18,7 @@
     ]
 }
 
-## Configuracion ossec.conf via GUI
+## Configuracion ossec.conf via GUI. Para este caso las credenciales del usuario con acceso a los logs fue configurada en el backend(mas adelante).
  
 <wodle name="aws-s3">
   <disabled>no</disabled>
