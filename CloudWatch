@@ -18,7 +18,7 @@
     ]
 }
 
-## Configuracion ossec.conf
+## Configuracion ossec.conf via GUI
  
 <wodle name="aws-s3">
   <disabled>no</disabled>
@@ -35,7 +35,7 @@
 
 Para esto hay dos formas de hacerlo:
 
-1. Se crea un archivo /root/.aws/credentials EN EL BACKEND con las credenciales correspondientes al usuario creado para la funcion. Dentro se debe colocar lo siguiente:
+1. Se crea un archivo /root/.aws/credentials EN EL BACKEND con las credenciales correspondientes al usuario creado para esta funcion. Dentro se debe colocar lo siguiente:
 
 [default]
 aws_access_key_id=foo
