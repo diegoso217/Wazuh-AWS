@@ -1,0 +1,36 @@
+# Politica para el usuario con acceso a los logs
+
+},
+{
+    "Sid": "VisualEditor4",
+    "Effect": "Allow",
+    "Action": [
+        "s3:GetObject",
+        "s3:ListBucket",
+        "s3:DeleteObject"
+    ],
+    "Resource": [
+        "arn:aws:s3:::aws-bucket-name/*",
+        "arn:aws:s3:::aws-bucket-name/"
+    ]
+ }
+
+## Configuracion ossec.conf
+ 
+<wodle name="aws-s3">
+  <disabled>no</disabled>
+  <interval>5m</interval>
+  <run_on_start>yes</run_on_start>
+  <skip_on_error>yes</skip_on_error>
+     <bucket type="alb">
+       <name>aws-bucket-name</name>
+       <aws_profile>profile-configurado</aws_profile>
+     </bucket>
+</wodle>
+
+## Links de utilidad:
+https://documentation.wazuh.com/current/user-manual/reference/ossec-conf/wodle-s3.html#buckets
+https://documentation.wazuh.com/current/cloud-security/amazon/services/supported-services/elastic-load-balancing/alb.html#amazon-alb
+https://documentation.wazuh.com/current/cloud-security/amazon/services/troubleshooting.htmlÇ
+https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-access-logs.html
+
