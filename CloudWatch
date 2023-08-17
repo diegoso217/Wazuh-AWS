@@ -1,0 +1,73 @@
+# Politica para el usuario con acceso a los logs
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": "logs:DescribeLogStreams",
+            "Resource": "arn:aws:logs:region:account_ID:log-group:log_group_name:*"
+        },
+        {
+            "Sid": "VisualEditor1",
+            "Effect": "Allow",
+            "Action": "logs:GetLogEvents",
+            "Resource": "arn:aws:logs:region:account_ID:log-group:log_group_name:log-stream:log_stream_name"
+        }
+    ]
+}
+
+## Configuracion ossec.conf
+ 
+<wodle name="aws-s3">
+  <disabled>no</disabled>
+  <interval>5m</interval>
+  <run_on_start>yes</run_on_start>
+  <service type="cloudwatchlogs">
+    <aws_profile>default</aws_profile>
+    <aws_log_groups>example_log_group</aws_log_groups>
+    <regions>us-east-1</regions>
+  </service>
+</wodle>
+
+## Credenciales de usuario con acceso a los logs para autenticacion desde wazuh a aws.
+
+Para esto hay dos formas de hacerlo:
+
+1. Se crea un archivo /root/.aws/credentials EN EL BACKEND con las credenciales correspondientes al usuario creado para la funcion. Dentro se debe colocar lo siguiente:
+
+[default]
+aws_access_key_id=foo
+aws_secret_access_key=bar
+region=us-east-1
+
+[dev]
+aws_access_key_id=foo2
+aws_secret_access_key=bar2
+region=us-east-1
+
+[prod]
+aws_access_key_id=foo3
+aws_secret_access_key=bar3
+region=us-east-1
+
+2. Se configura directamente en el woodle en el ossec.conf via GUI de la siguiente forma:
+
+<wodle name="aws-s3">
+   <disabled>no</disabled>
+   <interval>5m</interval>
+   <run_on_start>yes</run_on_start>
+     <service type="cloudwatchlogs">
+       <access_key>XXXXXXXX</access_key>
+       <secret_key>xxxxxxxxxxxxxxx</secret_key>
+       <aws_log_groups>example_log_group</aws_log_groups>
+       <regions>us-east-1</regions>
+     </service>
+</wodle>
+
+## Links de utilidad:
+https://documentation.wazuh.com/current/cloud-security/amazon/services/supported-services/cloudwatchlogs.html
+https://documentation.wazuh.com/current/user-manual/reference/ossec-conf/wodle-s3.html
+https://documentation.wazuh.com/current/cloud-security/amazon/services/troubleshooting.html
+https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_create-console.html#access_policies_create-json-editor
